@@ -10,6 +10,7 @@ import AssessmentPage from "./pages/AssessmentPage";
 import ProfilePage from "./pages/ProfilePage";
 import InterventionsPage from "./pages/InterventionsPage";
 import AlertsPage from "./pages/AlertsPage";
+import PrivacyPage from "./pages/PrivacyPage";
 import NotFound from "./pages/NotFound";
 import UserDrawer from "./components/UserDrawer";
 
@@ -23,15 +24,16 @@ const App = () => (
       <BrowserRouter>
         <AuthProvider>
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/assessment" element={<AssessmentPage />} />
-            <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/interventions" element={<InterventionsPage />} />
-            <Route path="/alerts" element={<AlertsPage />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+                      <Route path="/" element={<Index />} />
+                      <Route path="/dashboard" element={<DashboardPage />} />
+                      <Route path="/assessment" element={<AssessmentPage />} />
+                      <Route path="/profile" element={<ProfilePage />} />
+                      <Route path="/interventions" element={<InterventionsPage />} />
+                      <Route path="/alerts" element={<AlertsPage />} />
+                      <Route path="/privacy" element={<PrivacyPage />} />
+                      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
           <UserDrawer />
         </AuthProvider>
       </BrowserRouter>

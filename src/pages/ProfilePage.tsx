@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { mockPersonnel } from "@/data/mockPersonnel";
 import { mockHRData } from "@/data/mockHRData";
 import { mockWellnessData } from "@/data/mockWellnessData";
+import { mockBiometricData } from "@/data/mockBiometricData";
 import { PredictiveRiskEngine } from "@/utils/riskEngine";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Heart, Shield, Clock, Activity, ArrowRight } from "lucide-react";
+import { Heart, Shield, Clock, Activity, ArrowRight, Battery, Moon, Droplets, Thermometer } from "lucide-react";
 
 export default function ProfilePage() {
   const { user, isAuthenticated } = useAuth();
@@ -21,7 +22,7 @@ export default function ProfilePage() {
   const personnel = mockPersonnel.find(p => p.id === user.id);
   const hrData = mockHRData.find(h => h.personnelId === user.id);
   const wellnessData = mockWellnessData.filter(w => w.personnelId === user.id);
-  const assessment = hrData ? PredictiveRiskEngine.calculateRisk(hrData, wellnessData) : null;
+  const assessment = hrData ? PredictiveRiskEngine.calculateRisk(hrData, wellnessData, mockBiometricData.find(b => b.personnelId === user.id)) : null;
 
   if (!personnel || !hrData) return null;
 
@@ -148,14 +149,67 @@ export default function ProfilePage() {
             </CardContent>
           </Card>
 
-          <Button 
-            variant="outline" 
-            className="w-full"
-            onClick={() => navigate("/dashboard")}
-          >
-            Back to Dashboard
-            <ArrowRight className="h-4 w-4 ml-2" />
-          </Button>
+          {/* Biometric Data */}
+                    {assessment && (
+                      <Card className="border-slate-200 shadow-lg">
+                        <CardHeader>
+                          <div className="flex items-center gap-3">
+                            <Battery className="h-6 w-6 text-[#0F766E]" />
+                            <CardTitle>Biometric Indicators</CardTitle>
+                          </div>
+                          <CardDescription>Wearable device data for health monitoring</CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="p-3 bg-slate-50 rounded-lg">
+                              <p className="text-xs text-slate-500">Resting Heart Rate</p>
+                              <p className="text-lg font-semibold text-slate-900">
+                                {mockBiometricData.find(b => b.personnelId === user.id)?.heartRate.resting || 'N/A'} bpm
+                              </p>
+                            </div>
+                            <div className="p-3 bg-slate-50 rounded-lg">
+                              <p className="text-xs text-slate-500">HR Variability</p>
+                              <p className="text-lg font-semibold text-slate-900">
+                                {mockBiometricData.find(b => b.personnelId === user.id)?.heartRate.variability || 'N/A'} ms
+                              </p>
+                            </div>
+                            <div className="p-3 bg-slate-50 rounded-lg">
+                              <p className="text-xs text-slate-500">Sleep Duration</p>
+                              <p className="text-lg font-semibold text-slate-900">
+                                {mockBiometricData.find(b => b.personnelId === user.id)?.sleep.hoursPerNight || 'N/A'} hrs
+                              </p>
+                            </div>
+                            <div className="p-3 bg-slate-50 rounded-lg">
+                              <p className="text-xs text-slate-500">Daily Steps</p>
+                              <p className="text-lg font-semibold text-slate-900">
+                                {mockBiometricData.find(b => b.personnelId === user.id)?.physicalActivity.stepsPerDay || 'N/A'}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="p-3 bg-slate-50 rounded-lg">
+                            <div className="flex items-center justify-between">
+                              <span className="text-sm text-slate-600">Cortisol Level</span>
+                              <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                mockBiometricData.find(b => b.personnelId === user.id)?.stressMarkers.cortisolLevel === 'high' ? 'bg-red-100 text-red-700' :
+                                mockBiometricData.find(b => b.personnelId === user.id)?.stressMarkers.cortisolLevel === 'elevated' ? 'bg-orange-100 text-orange-700' :
+                                'bg-green-100 text-green-700'
+                              }`}>
+                                {mockBiometricData.find(b => b.personnelId === user.id)?.stressMarkers.cortisolLevel || 'N/A'}
+                              </span>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    )}
+          
+                    <Button
+                      variant="outline"
+                      className="w-full"
+                      onClick={() => navigate("/dashboard")}
+                    >
+                      Back to Dashboard
+                      <ArrowRight className="h-4 w-4 ml-2" />
+                    </Button>
         </div>
       </div>
     </div>

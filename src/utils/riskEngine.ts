@@ -1,5 +1,6 @@
 import { HRIndicator } from "@/data/mockHRData";
 import { WellnessResponse } from "@/data/mockWellnessData";
+import { BiometricData } from "@/data/mockBiometricData";
 
 export type RiskLevel = "low" | "moderate" | "high" | "critical";
 
@@ -19,21 +20,23 @@ export interface RiskAssessment {
   recommendation: string;
   confidence: number; // 0-100
   lastUpdated: string;
+  explanation: string; // AI explainability - why this score was assigned
 }
 
 export class PredictiveRiskEngine {
   /**
-   * Calculate comprehensive risk assessment based on HR indicators and wellness data
+   * Calculate comprehensive risk assessment based on HR indicators, wellness data, and biometric data
    */
   static calculateRisk(
     hrData: HRIndicator,
-    wellnessData: WellnessResponse[]
+    wellnessData: WellnessResponse[],
+    biometricData?: BiometricData
   ): RiskAssessment {
     const factors: RiskFactor[] = [];
     let totalScore = 0;
     let maxPossibleScore = 0;
 
-    // Workload factors
+    // Workload factors (max 25)
     const workloadScore = this.assessWorkload(hrData);
     if (workloadScore.contribution > 0) {
       factors.push(workloadScore);
@@ -41,7 +44,7 @@ export class PredictiveRiskEngine {
       maxPossibleScore += 25;
     }
 
-    // Deployment factors
+    // Deployment factors (max 30)
     const deploymentScore = this.assessDeployment(hrData);
     if (deploymentScore.contribution > 0) {
       factors.push(deploymentScore);
@@ -49,7 +52,7 @@ export class PredictiveRiskEngine {
       maxPossibleScore += 30;
     }
 
-    // Transfer and stability factors
+    // Transfer and stability factors (max 20)
     const stabilityScore = this.assessStability(hrData);
     if (stabilityScore.contribution > 0) {
       factors.push(stabilityScore);
@@ -57,7 +60,7 @@ export class PredictiveRiskEngine {
       maxPossibleScore += 20;
     }
 
-    // Wellness indicators
+    // Wellness indicators (max 25)
     const wellnessScore = this.assessWellness(wellnessData);
     if (wellnessScore.contribution > 0) {
       factors.push(wellnessScore);
@@ -65,14 +68,25 @@ export class PredictiveRiskEngine {
       maxPossibleScore += 25;
     }
 
+    // Biometric factors (max 20) - optional
+    if (biometricData) {
+      const biometricScore = this.assessBiometrics(biometricData);
+      if (biometricScore.contribution > 0) {
+        factors.push(biometricScore);
+        totalScore += biometricScore.score;
+        maxPossibleScore += 20;
+      }
+    }
+
     // Normalize score to 0-100
-    const normalizedScore = maxPossibleScore > 0 
+    const normalizedScore = maxPossibleScore > 0
       ? Math.min(100, (totalScore / maxPossibleScore) * 100)
       : 0;
 
     const riskLevel = this.determineRiskLevel(normalizedScore);
-    const confidence = this.calculateConfidence(hrData, wellnessData);
+    const confidence = this.calculateConfidence(hrData, wellnessData, biometricData);
     const recommendation = this.generateRecommendation(riskLevel, factors);
+    const explanation = this.generateExplanation(riskLevel, factors, normalizedScore);
 
     return {
       personnelId: hrData.personnelId,
@@ -81,7 +95,8 @@ export class PredictiveRiskEngine {
       factors: factors.sort((a, b) => b.score - a.score),
       recommendation,
       confidence,
-      lastUpdated: new Date().toISOString().split('T')[0]
+      lastUpdated: new Date().toISOString().split('T')[0],
+      explanation
     };
   }
 
@@ -248,7 +263,7 @@ export class PredictiveRiskEngine {
       };
     }
 
-    const latest = wellnessData.sort((a, b) => 
+    const latest = wellnessData.sort((a, b) =>
       new Date(b.date).getTime() - new Date(a.date).getTime()
     )[0];
 
@@ -312,6 +327,86 @@ export class PredictiveRiskEngine {
     };
   }
 
+  private static assessBiometrics(biometricData: BiometricData): RiskFactor & { contribution: number } {
+    let score = 0;
+    const reasons: string[] = [];
+
+    // Elevated resting heart rate
+    if (biometricData.heartRate.resting > 90) {
+      score += 10;
+      reasons.push("elevated resting heart rate");
+    } else if (biometricData.heartRate.resting > 80) {
+      score += 5;
+      reasons.push("moderately elevated resting heart rate");
+    }
+
+    // Low heart rate variability (stress indicator)
+    if (biometricData.heartRate.variability < 30) {
+      score += 8;
+      reasons.push("low heart rate variability");
+    } else if (biometricData.heartRate.variability < 40) {
+      score += 4;
+      reasons.push("reduced heart rate variability");
+    }
+
+    // Poor sleep
+    if (biometricData.sleep.hoursPerNight < 5) {
+      score += 10;
+      reasons.push("severe sleep deprivation");
+    } else if (biometricData.sleep.hoursPerNight < 6) {
+      score += 6;
+      reasons.push("insufficient sleep");
+    }
+
+    if (biometricData.sleep.quality === "poor") {
+      score += 5;
+      reasons.push("poor sleep quality");
+    }
+
+    // Low physical activity
+    if (biometricData.physicalActivity.stepsPerDay < 3000) {
+      score += 5;
+      reasons.push("very low physical activity");
+    } else if (biometricData.physicalActivity.stepsPerDay < 5000) {
+      score += 3;
+      reasons.push("low physical activity");
+    }
+
+    // Elevated stress markers
+    if (biometricData.stressMarkers.cortisolLevel === "high") {
+      score += 10;
+      reasons.push("high cortisol levels");
+    } else if (biometricData.stressMarkers.cortisolLevel === "elevated") {
+      score += 6;
+      reasons.push("elevated cortisol levels");
+    }
+
+    if (biometricData.stressMarkers.skinConductance > 20) {
+      score += 5;
+      reasons.push("elevated skin conductance");
+    }
+
+    if (score === 0) {
+      return {
+        factor: "Biometrics",
+        category: "health",
+        severity: "low",
+        score: 0,
+        contribution: 0,
+        description: "Biometric indicators are within normal range"
+      };
+    }
+
+    return {
+      factor: "Biometric Stress Indicators",
+      category: "health",
+      severity: score > 15 ? "high" : "medium",
+      score,
+      contribution: score,
+      description: `Biometric indicators show: ${reasons.join(", ")}`
+    };
+  }
+
   private static determineRiskLevel(score: number): RiskLevel {
     if (score >= 75) return "critical";
     if (score >= 55) return "high";
@@ -319,7 +414,11 @@ export class PredictiveRiskEngine {
     return "low";
   }
 
-  private static calculateConfidence(hrData: HRIndicator, wellnessData: WellnessResponse[]): number {
+  private static calculateConfidence(
+    hrData: HRIndicator,
+    wellnessData: WellnessResponse[],
+    biometricData?: BiometricData
+  ): number {
     let confidence = 60; // Base confidence
 
     // More wellness data increases confidence
@@ -330,6 +429,9 @@ export class PredictiveRiskEngine {
     if (hrData.deployments.totalDays > 0) confidence += 5;
     if (hrData.dutySchedule.overtimeHours > 0) confidence += 5;
     if (hrData.training.coursesCompleted > 0) confidence += 5;
+
+    // Biometric data increases confidence
+    if (biometricData) confidence += 10;
 
     return Math.min(95, confidence);
   }
@@ -343,5 +445,12 @@ export class PredictiveRiskEngine {
     };
 
     return recommendations[riskLevel];
+  }
+
+  private static generateExplanation(riskLevel: RiskLevel, factors: RiskFactor[], score: number): string {
+    const activeFactors = factors.filter(f => f.score > 0);
+    const factorDescriptions = activeFactors.map(f => `${f.factor} (${f.severity})`).join(", ");
+
+    return `Risk score of ${Math.round(score)}/100 (${riskLevel.toUpperCase()}) was calculated based on ${activeFactors.length} contributing factors: ${factorDescriptions || "none significant"}. The AI model weighted workload, deployment history, stability indicators, wellness self-reports, and biometric data to arrive at this assessment.`;
   }
 }

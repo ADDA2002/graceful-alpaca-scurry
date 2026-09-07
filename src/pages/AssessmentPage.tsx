@@ -5,6 +5,7 @@ import { mockPersonnel } from "@/data/mockPersonnel";
 import { PredictiveRiskEngine, RiskAssessment } from "@/utils/riskEngine";
 import { mockHRData } from "@/data/mockHRData";
 import { mockWellnessData } from "@/data/mockWellnessData";
+import { mockBiometricData } from "@/data/mockBiometricData";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -65,7 +66,7 @@ export default function AssessmentPage() {
         ...responses
       };
       
-      const assessment = PredictiveRiskEngine.calculateRisk(hrData, [...wellnessData, newWellness]);
+      const assessment = PredictiveRiskEngine.calculateRisk(hrData, [...wellnessData, newWellness], mockBiometricData.find(b => b.personnelId === user.id));
       setRiskResult(assessment);
       setSubmitted(true);
     }

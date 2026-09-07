@@ -4,11 +4,14 @@ import { useEffect, useState } from "react";
 import { mockPersonnel } from "@/data/mockPersonnel";
 import { mockHRData } from "@/data/mockHRData";
 import { mockWellnessData } from "@/data/mockWellnessData";
+import { mockBiometricData } from "@/data/mockBiometricData";
 import { PredictiveRiskEngine, RiskAssessment } from "@/utils/riskEngine";
+import { NotificationManager } from "@/utils/notifications";
 import RiskOverview from "@/components/Dashboard/RiskOverview";
 import PersonnelList from "@/components/Dashboard/PersonnelList";
 import TrendCharts from "@/components/Dashboard/TrendCharts";
 import AlertPanel from "@/components/Alerts/AlertPanel";
+import NotificationPanel from "@/components/Notifications/NotificationPanel";
 import MobileNav from "@/components/Layout/MobileNav";
 import TopNav from "@/components/Layout/TopNav";
 import { Button } from "@/components/ui/button";
@@ -30,14 +33,27 @@ export default function DashboardPage() {
   }, [isAuthenticated, navigate]);
 
   const calculateAllRisks = () => {
-    setIsRefreshing(true);
-    const newAssessments = mockHRData.map(hr => {
-      const wellness = mockWellnessData.filter(w => w.personnelId === hr.personnelId);
-      return PredictiveRiskEngine.calculateRisk(hr, wellness);
-    });
-    setAssessments(newAssessments);
-    setTimeout(() => setIsRefreshing(false), 500);
-  };
+      setIsRefreshing(true);
+      const newAssessments = mockHRData.map(hr => {
+        const wellness = mockWellnessData.filter(w => w.personnelId === hr.personnelId);
+        const biometric = mockBiometricData.find(b => b.personnelId === hr.personnelId);
+        const assessment = PredictiveRiskEngine.calculateRisk(hr, wellness, biometric);
+  
+        // Generate notifications for critical/high risk personnel
+        if (assessment.riskLevel === "critical" || assessment.riskLevel === "high") {
+          NotificationManager.generateWelfareAlert(
+            hr.personnelId,
+            assessment.riskLevel,
+            assessment.overallScore,
+            assessment.factors.slice(0, 2).map(f => f.factor)
+          );
+        }
+  
+        return assessment;
+      });
+      setAssessments(newAssessments);
+      setTimeout(() => setIsRefreshing(false), 500);
+    };
 
   const getRiskCounts = () => {
     return {
@@ -76,7 +92,7 @@ export default function DashboardPage() {
       });
   };
 
-  const selectedPersonnelData = selectedPersonnel 
+  const selectedPersonnelData = selectedPersonnel
     ? getPersonnelWithRisk().find(p => p.id === selectedPersonnel)
     : null;
 
@@ -85,7 +101,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-[#F0F7FA]">
       <TopNav user={user} />
-      
+
       <main className="container mx-auto px-4 pb-24 md:pb-8">
         {/* Dashboard Header */}
         <div className="flex items-center justify-between py-6">
@@ -93,8 +109,8 @@ export default function DashboardPage() {
             <h1 className="text-2xl font-bold text-slate-900">Command Dashboard</h1>
             <p className="text-slate-600">Real-time personnel welfare monitoring</p>
           </div>
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             size="sm"
             onClick={calculateAllRisks}
             disabled={isRefreshing}
@@ -114,7 +130,7 @@ export default function DashboardPage() {
           <div className="lg:col-span-2 space-y-6">
             {/* Trend Charts */}
             <TrendCharts assessments={assessments} />
-            
+
             {/* Personnel List */}
             <PersonnelList
               personnel={getPersonnelWithRisk()}
@@ -127,7 +143,7 @@ export default function DashboardPage() {
           {/* Right Column - Alerts & Details */}
           <div className="space-y-6">
             {/* Alert Panel */}
-            <AlertPanel 
+            <AlertPanel
               alerts={getCriticalAlerts()}
               userRole={user.role}
             />
@@ -142,11 +158,11 @@ export default function DashboardPage() {
                       {selectedPersonnelData.name.split(' ').map(n => n[0]).join('')}
                     </div>
                     <div>
-                                        <p className="font-medium text-slate-900">{selectedPersonnelData.name}</p>
-                                        <p className="text-sm text-slate-500">{selectedPersonnelData.rank} • {selectedPersonnelData.division}</p>
-                                      </div>
+                      <p className="font-medium text-slate-900">{selectedPersonnelData.name}</p>
+                      <p className="text-sm text-slate-500">{selectedPersonnelData.rank} • {selectedPersonnelData.division}</p>
+                    </div>
                   </div>
-                  
+
                   {selectedPersonnelData.assessment && (
                     <div className="mt-4 pt-4 border-t border-slate-100">
                       <div className="flex items-center justify-between mb-3">

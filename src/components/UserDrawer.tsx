@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { User, Shield, LogOut, X, Menu } from "lucide-react";
+import { User, Shield, LogOut, X, Menu, Settings, Shield as ShieldIcon } from "lucide-react";
 
 export default function UserDrawer() {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
   if (!user) return null;
@@ -15,6 +17,11 @@ export default function UserDrawer() {
     logout();
     setIsOpen(false);
     window.location.href = "/";
+  };
+
+  const handleNavigate = (path: string) => {
+    setIsOpen(false);
+    navigate(path);
   };
 
   return (
@@ -90,6 +97,34 @@ export default function UserDrawer() {
               <span className="text-slate-500">Years of Service</span>
               <span className="font-medium text-slate-900">{user.yearsOfService}</span>
             </div>
+          </div>
+
+          {/* Navigation Links */}
+          <div className="pt-4 border-t border-slate-100 space-y-2">
+            <Button
+              variant="ghost"
+              className="w-full justify-start gap-3"
+              onClick={() => handleNavigate("/profile")}
+            >
+              <User className="h-4 w-4" />
+              <span>My Profile</span>
+            </Button>
+            <Button
+              variant="ghost"
+              className="w-full justify-start gap-3"
+              onClick={() => handleNavigate("/privacy")}
+            >
+              <ShieldIcon className="h-4 w-4" />
+              <span>Privacy Settings</span>
+            </Button>
+            <Button
+              variant="ghost"
+              className="w-full justify-start gap-3"
+              onClick={() => handleNavigate("/dashboard")}
+            >
+              <Settings className="h-4 w-4" />
+              <span>Dashboard</span>
+            </Button>
           </div>
         </div>
 
