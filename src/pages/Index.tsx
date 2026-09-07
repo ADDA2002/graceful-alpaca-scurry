@@ -248,15 +248,6 @@ export default function Index() {
                                                   required
                                                 />
                                               </div>
-                                              {formData.aadharId ? (
-                                                <div className="mt-1 text-center text-xs text-slate-400 font-mono">
-                                                  {formatAadhar(formData.aadharId)}
-                                                </div>
-                                              ) : (
-                                                <div className="mt-1 text-center text-xs text-slate-300 font-mono">
-                                                  XXXX XXXX XXXX
-                                                </div>
-                                              )}
                                             </div>
                                           </div>
 
