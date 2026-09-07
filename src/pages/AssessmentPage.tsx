@@ -203,7 +203,7 @@ export default function AssessmentPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[#F0F7FA]">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
           {/* Header */}
@@ -213,8 +213,8 @@ export default function AssessmentPage() {
             </div>
             <h1 className="text-2xl font-bold text-slate-900">Wellness Check-In</h1>
             <p className="text-slate-600 mt-2">
-              {personnel?.name} • {personnel?.department}
-            </p>
+                          {personnel?.name} • {personnel?.division}
+                        </p>
           </div>
 
           {/* Progress */}

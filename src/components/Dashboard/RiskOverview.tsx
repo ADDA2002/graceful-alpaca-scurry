@@ -18,7 +18,7 @@ export default function RiskOverview({ counts }: RiskOverviewProps) {
       label: "Critical Risk",
       count: counts.critical,
       icon: AlertTriangle,
-      bg: "bg-gradient-to-br from-red-500 to-red-600",
+      bg: "bg-gradient-to-br from-[#0F766E] to-red-500",
       textColor: "text-white",
       subtext: "Immediate attention required"
     },
@@ -26,7 +26,7 @@ export default function RiskOverview({ counts }: RiskOverviewProps) {
       label: "High Risk",
       count: counts.high,
       icon: AlertCircle,
-      bg: "bg-gradient-to-br from-orange-400 to-orange-500",
+      bg: "bg-gradient-to-br from-[#0F766E] to-orange-500",
       textColor: "text-white",
       subtext: "Intervention recommended"
     },
@@ -34,15 +34,15 @@ export default function RiskOverview({ counts }: RiskOverviewProps) {
       label: "Moderate Risk",
       count: counts.moderate,
       icon: TrendingUp,
-      bg: "bg-gradient-to-br from-yellow-400 to-yellow-500",
-      textColor: "text-slate-900",
+      bg: "bg-gradient-to-br from-[#0F766E] to-teal-400",
+      textColor: "text-white",
       subtext: "Increased monitoring"
     },
     {
       label: "Low Risk",
       count: counts.low,
       icon: CheckCircle,
-      bg: "bg-gradient-to-br from-green-400 to-green-500",
+      bg: "bg-gradient-to-br from-[#0F766E] to-green-500",
       textColor: "text-white",
       subtext: "Stable welfare status"
     }

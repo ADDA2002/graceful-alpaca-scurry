@@ -26,7 +26,7 @@ export default function ProfilePage() {
   if (!personnel || !hrData) return null;
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[#F0F7FA]">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-3xl mx-auto space-y-6">
           {/* Profile Header */}
@@ -39,8 +39,8 @@ export default function ProfilePage() {
               </div>
               <CardTitle className="text-2xl text-slate-900">{personnel.name}</CardTitle>
               <CardDescription>
-                {personnel.rank} • {personnel.department} • {personnel.yearsOfService} years of service
-              </CardDescription>
+                              {personnel.rank} • {personnel.division} • {personnel.yearsOfService} years of service
+                            </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 gap-4">

@@ -28,7 +28,7 @@ export default function InterventionsPage() {
   if (!personnel || !hrData || !assessment || !recommendations) return null;
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[#F0F7FA]">
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-3xl mx-auto space-y-6">
           {/* Header */}

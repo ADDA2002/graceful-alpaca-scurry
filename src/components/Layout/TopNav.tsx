@@ -1,5 +1,5 @@
 import { useAuth } from "@/context/AuthContext";
-import { LogOut, User } from "lucide-react";
+import { LogOut, UserIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function TopNav({ user }: { user: any }) {
@@ -8,7 +8,7 @@ export default function TopNav({ user }: { user: any }) {
   return (
     <div className="flex items-center gap-4">
       <div className="flex items-center gap-2 text-slate-600 text-sm">
-        <User className="h-4 w-4" />
+        <UserIcon className="h-4 w-4" />
         <span>Welcome, {user?.name}</span>
       </div>
 

@@ -83,7 +83,7 @@ export default function DashboardPage() {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[#F0F7FA]">
       <TopNav user={user} />
       
       <main className="container mx-auto px-4 pb-24 md:pb-8">
@@ -138,13 +138,13 @@ export default function DashboardPage() {
                 <h3 className="font-semibold text-slate-900 mb-4">Selected Personnel</h3>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
-                    <div className="h-12 w-12 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white font-semibold">
+                    <div className="h-12 w-12 rounded-full bg-gradient-to-br from-[#0F766E] to-teal-500 flex items-center justify-center text-white font-semibold">
                       {selectedPersonnelData.name.split(' ').map(n => n[0]).join('')}
                     </div>
                     <div>
-                      <p className="font-medium text-slate-900">{selectedPersonnelData.name}</p>
-                      <p className="text-sm text-slate-500">{selectedPersonnelData.rank} • {selectedPersonnelData.department}</p>
-                    </div>
+                                        <p className="font-medium text-slate-900">{selectedPersonnelData.name}</p>
+                                        <p className="text-sm text-slate-500">{selectedPersonnelData.rank} • {selectedPersonnelData.division}</p>
+                                      </div>
                   </div>
                   
                   {selectedPersonnelData.assessment && (

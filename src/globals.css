@@ -4,8 +4,8 @@
 
 @layer base {
   :root {
-    /* MedTech/HealthTech Color Palette */
-    --background: 0 0% 100%;
+    /* New Color Theme */
+    --background: 240 9% 98%; /* #F0F7FA */
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -14,13 +14,13 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    /* Deep Navy - Trust & Authority */
-    --primary: 222 47% 25%;
+    /* Primary Color - Teal */
+    --primary: 174 62% 43%; /* #0F766E */
     --primary-foreground: 210 40% 98%;
 
-    /* Teal - Health & Wellness */
-    --secondary: 174 72% 46%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary Color - Light Background */
+    --secondary: 240 9% 98%; /* #F0F7FA */
+    --secondary-foreground: 222.2 84% 4.9%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
@@ -54,11 +54,11 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
+    --primary: 174 62% 43%; /* #0F766E */
     --primary-foreground: 222.2 47.4% 11.2%;
 
-    --secondary: 174 72% 60%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 222.2 84% 4.9%;
+    --secondary-foreground: 210 40% 98%;
 
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215 20.2% 65.1%;
@@ -98,5 +98,26 @@
   
   .teal-gradient {
     background: linear-gradient(135deg, #0D9488 0%, #14B8A6 100%);
+  }
+
+  /* New theme colors */
+  .bg-app-light {
+    background-color: #F0F7FA;
+  }
+  
+  .bg-app-primary {
+    background-color: #0F766E;
+  }
+  
+  .text-app-primary {
+    color: #0F766E;
+  }
+  
+  .border-app-primary {
+    border-color: #0F766E;
+  }
+  
+  .ring-app-primary {
+    --tw-ring-color: #0F766E;
   }
 }
