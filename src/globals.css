@@ -120,6 +120,14 @@
   }
   
   .ring-app-primary {
-    --tw-ring-color: #0F766E;
+      --tw-ring-color: #0F766E;
+    }
+  
+    /* Center placeholder in Aadhar input while keeping text left-aligned */
+    .aadhar-input::placeholder {
+      text-align: center;
+    }
+    .aadhar-input:not(:placeholder-shown) {
+      text-align: left;
+    }
   }
-}

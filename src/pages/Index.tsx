@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
 import { mockPersonnel, RANKS, DIVISIONS } from "@/data/mockPersonnel";
@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Shield, User, Lock, ArrowRight, AlertCircle, ChevronDown, ChevronUp } from "lucide-react";
+import { Shield, User, ArrowRight, AlertCircle, ChevronDown, ChevronUp } from "lucide-react";
 
 export default function Index() {
   const { login } = useAuth();
@@ -68,17 +68,58 @@ export default function Index() {
     setShowDivisionSuggestions(false);
   };
 
-  const handleAadharChange = (value: string) => {
-    // Only allow digits, max 12
-    const digits = value.replace(/\D/g, "").slice(0, 12);
-    setFormData(prev => ({ ...prev, aadharId: digits }));
+  const formatAadharDisplay = (digits: string) => {
+    if (!digits) return "";
+    const parts = digits.match(/.{1,4}/g);
+    if (!parts) return digits;
+    return parts.join("-");
   };
 
-  const formatAadhar = (value: string) => {
-    if (!value) return "XXXX XXXX XXXX";
-    const padded = value.padEnd(12, "X");
-    return `${padded.slice(0, 4)} ${padded.slice(4, 8)} ${padded.slice(8, 12)}`;
-  };
+  const handleAadharChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target;
+    const cursorPos = input.selectionStart;
+    const rawValue = input.value;
+
+    // Count digits before cursorPos in rawValue
+    let digitsBeforeCursor = 0;
+    for (let i = 0; i < cursorPos && i < rawValue.length; i++) {
+      if (rawValue[i] !== '-') {
+        digitsBeforeCursor++;
+      }
+    }
+
+    // Extract only digits
+    const digits = rawValue.replace(/\D/g, "").slice(0, 12);
+    setFormData(prev => ({ ...prev, aadharId: digits }));
+
+    // Build formatted display value
+    const parts: string[] = [];
+    for (let i = 0; i < digits.length; i += 4) {
+      parts.push(digits.slice(i, i + 4));
+    }
+    const formatted = parts.join("-");
+
+    // Calculate new cursor position in formatted string
+    let newCursorPos = 0;
+    let digitCount = 0;
+    for (let i = 0; i < formatted.length; i++) {
+      if (formatted[i] === '-') {
+        newCursorPos++;
+      } else {
+        if (digitCount < digitsBeforeCursor) {
+          digitCount++;
+          newCursorPos++;
+        } else {
+          break;
+        }
+      }
+    }
+
+    // Set cursor position after the input re-renders
+    requestAnimationFrame(() => {
+      input.setSelectionRange(newCursorPos, newCursorPos);
+    });
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -234,21 +275,16 @@ export default function Index() {
               {/* Aadhar ID Field - Formatted */}
                                           <div className="space-y-2">
                                             <Label htmlFor="aadharId" className="text-slate-700">Aadhar ID</Label>
-                                            <div className="relative">
-                                              <div className="relative">
-                                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 z-10" />
-                                                <Input
-                                                  id="aadharId"
-                                                  type="text"
-                                                  placeholder="XXXX XXXX XXXX"
-                                                  value={formData.aadharId}
-                                                  onChange={(e) => handleAadharChange(e.target.value)}
-                                                  className="pl-10 border-slate-300 focus:border-[#0F766E] focus:ring-[#0F766E] font-mono text-left text-lg tracking-widest"
-                                                  maxLength={12}
-                                                  required
-                                                />
-                                              </div>
-                                            </div>
+                                            <Input
+                                                                                          id="aadharId"
+                                                                                          type="text"
+                                                                                          placeholder="XXXX-XXXX-XXXX"
+                                                                                          value={formData.aadharId ? formatAadharDisplay(formData.aadharId) : ""}
+                                                                                          onChange={handleAadharChange}
+                                                                                          className="aadhar-input border-slate-300 focus:border-[#0F766E] focus:ring-[#0F766E] font-mono text-left text-lg tracking-widest"
+                                                                                          maxLength={14}
+                                                                                          required
+                                                                                        />
                                           </div>
 
               {/* Error Message */}
