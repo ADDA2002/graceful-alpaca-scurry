@@ -54,7 +54,7 @@ export default function Index() {
       if (value.length > 0) {
         const filtered = DIVISIONS.filter(d =>
           d.toLowerCase().includes(value.toLowerCase())
-        );
+        ).sort((a, b) => a.localeCompare(b));
         setDivisionSuggestions(filtered);
         setShowDivisionSuggestions(true);
       } else {
@@ -203,31 +203,31 @@ export default function Index() {
                     value={formData.division}
                     onChange={(e) => handleDivisionChange(e.target.value)}
                     onFocus={() => {
-                                          if (formData.division.length > 0) {
-                                            const filtered = DIVISIONS.filter(d =>
-                                              d.toLowerCase().includes(formData.division.toLowerCase())
-                                            );
-                                            setDivisionSuggestions(filtered);
-                                            setShowDivisionSuggestions(true);
-                                          }
-                                        }}
+                                                              if (formData.division.length > 0) {
+                                                                const filtered = DIVISIONS.filter(d =>
+                                                                  d.toLowerCase().includes(formData.division.toLowerCase())
+                                                                ).sort((a, b) => a.localeCompare(b));
+                                                                setDivisionSuggestions(filtered);
+                                                                setShowDivisionSuggestions(true);
+                                                              }
+                                                            }}
                     className="border-slate-300 focus:border-[#0F766E] focus:ring-[#0F766E]"
                     required
                   />
                   {showDivisionSuggestions && divisionSuggestions.length > 0 && (
-                                      <div className="absolute z-10 w-full mt-1 bg-white border border-slate-200 rounded-lg shadow-lg max-h-80 overflow-y-auto">
-                                        {DIVISIONS.map(division => (
-                                          <button
-                                            key={division}
-                                            type="button"
-                                            className="w-full px-3 py-2 text-left text-sm hover:bg-[#0F766E]/10 hover:text-[#0F766E] transition-colors"
-                                            onClick={() => handleDivisionSelect(division)}
-                                          >
-                                            {division}
-                                          </button>
-                                        ))}
-                                      </div>
-                                    )}
+                                                        <div className="absolute z-10 w-full mt-1 bg-white border border-slate-200 rounded-lg shadow-lg max-h-80 overflow-y-auto">
+                                                          {divisionSuggestions.map(division => (
+                                                            <button
+                                                              key={division}
+                                                              type="button"
+                                                              className="w-full px-3 py-2 text-left text-sm hover:bg-[#0F766E]/10 hover:text-[#0F766E] transition-colors"
+                                                              onClick={() => handleDivisionSelect(division)}
+                                                            >
+                                                              {division}
+                                                            </button>
+                                                          ))}
+                                                        </div>
+                                                      )}
                 </div>
               </div>
 
