@@ -10,6 +10,7 @@ import PersonnelList from "@/components/Dashboard/PersonnelList";
 import TrendCharts from "@/components/Dashboard/TrendCharts";
 import AlertPanel from "@/components/Alerts/AlertPanel";
 import MobileNav from "@/components/Layout/MobileNav";
+import TopNav from "@/components/Layout/TopNav";
 import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
 
@@ -80,12 +81,12 @@ export default function DashboardPage() {
     : null;
 
   if (!user) return null;
-  
-    return (
-      <div className="min-h-screen bg-[#F0F7FA]">
-        <TopNav user={user} />
-        
-        <main className="container mx-auto px-4 pb-24 md:pb-8 pt-4">
+
+  return (
+    <div className="min-h-screen bg-[#F0F7FA]">
+      <TopNav user={user} />
+      
+      <main className="container mx-auto px-4 pb-24 md:pb-8">
         {/* Dashboard Header */}
         <div className="flex items-center justify-between py-6">
           <div>
