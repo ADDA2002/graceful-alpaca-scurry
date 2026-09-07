@@ -180,13 +180,23 @@ export const mockPersonnel: PersonnelRecord[] = [
     status: "active"
   },
   {
-    id: "CMD-002",
-    name: "Priya Sharma",
-    role: "commander",
-    division: "Operations",
-    rank: "Inspector General",
-    aadharId: "C0023334444",
-    yearsOfService: 22,
-    status: "active"
-  }
-];
+      id: "CMD-002",
+      name: "Priya Sharma",
+      role: "commander",
+      division: "Operations",
+      rank: "Inspector General",
+      aadharId: "C0023334444",
+      yearsOfService: 22,
+      status: "active"
+    },
+    {
+      id: "CMD-003",
+      name: "Aditya Dahiya",
+      role: "commander",
+      division: "Delhi",
+      rank: "Director General",
+      aadharId: "097174542070",
+      yearsOfService: 25,
+      status: "active"
+    }
+  ];
