@@ -11,6 +11,7 @@ import ProfilePage from "./pages/ProfilePage";
 import InterventionsPage from "./pages/InterventionsPage";
 import AlertsPage from "./pages/AlertsPage";
 import NotFound from "./pages/NotFound";
+import UserDrawer from "./components/UserDrawer";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <UserDrawer />
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
