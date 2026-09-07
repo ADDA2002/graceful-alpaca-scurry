@@ -280,11 +280,6 @@ export default function Index() {
           </CardContent>
         </Card>
 
-        {/* Footer */}
-        <div className="text-center mt-6 text-slate-500 text-sm">
-          <p>RakhshaSetu — Demo System</p>
-          <p className="mt-1">Ethical AI practices | Transparent risk factors | Privacy-first design</p>
-        </div>
       </div>
     </div>
   );
