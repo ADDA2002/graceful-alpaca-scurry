@@ -50,18 +50,18 @@ export default function Index() {
   };
 
   const handleDivisionChange = (value: string) => {
-      setFormData(prev => ({ ...prev, division: value }));
-      if (value.length > 0) {
-        const filtered = DIVISIONS.filter(d =>
-          d.toLowerCase().includes(value.toLowerCase())
-        ).sort((a, b) => a.localeCompare(b));
-        setDivisionSuggestions(filtered);
-        setShowDivisionSuggestions(true);
-      } else {
-        setDivisionSuggestions([]);
-        setShowDivisionSuggestions(false);
-      }
-    };
+        setFormData(prev => ({ ...prev, division: value }));
+        if (value.length > 0) {
+          const filtered = DIVISIONS.filter(d =>
+            d.toLowerCase().startsWith(value.toLowerCase())
+          ).sort((a, b) => a.localeCompare(b));
+          setDivisionSuggestions(filtered);
+          setShowDivisionSuggestions(true);
+        } else {
+          setDivisionSuggestions([]);
+          setShowDivisionSuggestions(false);
+        }
+      };
 
   const handleDivisionSelect = (division: string) => {
     setFormData(prev => ({ ...prev, division }));
@@ -244,14 +244,14 @@ export default function Index() {
                     value={formData.division}
                     onChange={(e) => handleDivisionChange(e.target.value)}
                     onFocus={() => {
-                                                              if (formData.division.length > 0) {
-                                                                const filtered = DIVISIONS.filter(d =>
-                                                                  d.toLowerCase().includes(formData.division.toLowerCase())
-                                                                ).sort((a, b) => a.localeCompare(b));
-                                                                setDivisionSuggestions(filtered);
-                                                                setShowDivisionSuggestions(true);
-                                                              }
-                                                            }}
+                                                                                  if (formData.division.length > 0) {
+                                                                                    const filtered = DIVISIONS.filter(d =>
+                                                                                      d.toLowerCase().startsWith(formData.division.toLowerCase())
+                                                                                    ).sort((a, b) => a.localeCompare(b));
+                                                                                    setDivisionSuggestions(filtered);
+                                                                                    setShowDivisionSuggestions(true);
+                                                                                  }
+                                                                                }}
                     className="border-slate-300 focus:border-[#0F766E] focus:ring-[#0F766E]"
                     required
                   />
