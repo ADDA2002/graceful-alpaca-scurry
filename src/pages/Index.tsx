@@ -243,7 +243,7 @@ export default function Index() {
                                                   placeholder="XXXX XXXX XXXX"
                                                   value={formData.aadharId}
                                                   onChange={(e) => handleAadharChange(e.target.value)}
-                                                  className="pl-10 border-slate-300 focus:border-[#0F766E] focus:ring-[#0F766E] font-mono text-center text-lg tracking-widest"
+                                                  className="pl-10 border-slate-300 focus:border-[#0F766E] focus:ring-[#0F766E] font-mono text-left text-lg tracking-widest"
                                                   maxLength={12}
                                                   required
                                                 />
