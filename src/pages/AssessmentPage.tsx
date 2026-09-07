@@ -258,13 +258,11 @@ export default function AssessmentPage() {
                                                                                               onValueChange={(val) => handleSliderChange(fieldKey, val[0])}
                                                                                               className="w-full"
                                                                                             />
-                                                                                            <div className="relative h-4">
-                                                                                              {q.labels.map((label, idx) => (
-                                                                                                <span key={idx} className="absolute text-xs text-slate-500" style={{ left: `${idx * 25}%`, transform: 'translateX(-50%)' }}>
-                                                                                                  {label}
-                                                                                                </span>
-                                                                                              ))}
-                                                                                            </div>
+                                                                                            <div className="grid grid-cols-5 gap-0 text-xs text-slate-500">
+                                                                                                                                                                                          {q.labels.map((label, idx) => (
+                                                                                                                                                                                            <span key={idx} className="text-center truncate px-1">{label}</span>
+                                                                                                                                                                                          ))}
+                                                                                                                                                                                        </div>
                                               <div className="text-center">
                                                 <span className="text-3xl font-bold text-slate-900">{currentValue}</span>
                                                 <p className="text-sm text-slate-500 mt-1">{q.labels[currentValue - 1]}</p>
