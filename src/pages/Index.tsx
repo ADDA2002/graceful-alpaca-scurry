@@ -151,46 +151,46 @@ export default function Index() {
               </div>
 
               {/* Rank Field - Dropdown */}
-              <div className="space-y-2">
-                <Label htmlFor="rank" className="text-slate-700">Rank</Label>
-                <div className="relative" ref={rankDropdownRef}>
-                  <Input
-                    id="rank"
-                    type="text"
-                    placeholder="Select your rank"
-                    value={formData.rank}
-                    onChange={(e) => handleChange("rank", e.target.value)}
-                    onClick={() => setRankDropdownOpen(!rankDropdownOpen)}
-                    className="border-slate-300 focus:border-[#0F766E] focus:ring-[#0F766E] cursor-pointer"
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setRankDropdownOpen(!rankDropdownOpen)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2"
-                  >
-                    {rankDropdownOpen ? (
-                      <ChevronUp className="h-4 w-4 text-slate-400" />
-                    ) : (
-                      <ChevronDown className="h-4 w-4 text-slate-400" />
-                    )}
-                  </button>
-                  {rankDropdownOpen && (
-                    <div className="absolute z-10 w-full mt-1 bg-white border border-slate-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                      {RANKS.map(rank => (
-                        <button
-                          key={rank}
-                          type="button"
-                          className="w-full px-3 py-2 text-left text-sm hover:bg-[#0F766E]/10 hover:text-[#0F766E] transition-colors"
-                          onClick={() => handleRankSelect(rank)}
-                        >
-                          {rank}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
+                            <div className="space-y-2">
+                              <Label htmlFor="rank" className="text-slate-700">Rank</Label>
+                              <div className="relative" ref={rankDropdownRef}>
+                                <Input
+                                  id="rank"
+                                  type="text"
+                                  placeholder="Select your rank"
+                                  value={formData.rank}
+                                  onClick={() => setRankDropdownOpen(!rankDropdownOpen)}
+                                  className="border-slate-300 focus:border-[#0F766E] focus:ring-[#0F766E] cursor-pointer"
+                                  required
+                                  readOnly
+                                />
+                                <button
+                                  type="button"
+                                  onClick={() => setRankDropdownOpen(!rankDropdownOpen)}
+                                  className="absolute right-3 top-1/2 -translate-y-1/2"
+                                >
+                                  {rankDropdownOpen ? (
+                                    <ChevronUp className="h-4 w-4 text-slate-400" />
+                                  ) : (
+                                    <ChevronDown className="h-4 w-4 text-slate-400" />
+                                  )}
+                                </button>
+                                {rankDropdownOpen && (
+                                  <div className="absolute z-10 w-full mt-1 bg-white border border-slate-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                                    {RANKS.map(rank => (
+                                      <button
+                                        key={rank}
+                                        type="button"
+                                        className="w-full px-3 py-2 text-left text-sm hover:bg-[#0F766E]/10 hover:text-[#0F766E] transition-colors"
+                                        onClick={() => handleRankSelect(rank)}
+                                      >
+                                        {rank}
+                                      </button>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
 
               {/* Division Field - Autocomplete */}
               <div className="space-y-2">
@@ -232,35 +232,31 @@ export default function Index() {
               </div>
 
               {/* Aadhar ID Field - Formatted */}
-              <div className="space-y-2">
-                <Label htmlFor="aadharId" className="text-slate-700">Aadhar ID</Label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-                  <div className="relative">
-                    <Input
-                      id="aadharId"
-                      type="text"
-                      placeholder="12-digit Aadhar number"
-                      value={formData.aadharId}
-                      onChange={(e) => handleAadharChange(e.target.value)}
-                      className="pl-10 border-slate-300 focus:border-[#0F766E] focus:ring-[#0F766E] font-mono text-center text-lg tracking-widest"
-                      maxLength={12}
-                      required
-                    />
-                    {/* Placeholder overlay for formatting */}
-                    {!formData.aadharId && (
-                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none text-slate-300 font-mono text-lg">
-                        XXXX XXXX XXXX
-                      </div>
-                    )}
-                  </div>
-                  {formData.aadharId && (
-                    <div className="mt-1 text-center text-xs text-slate-400 font-mono">
-                      {formatAadhar(formData.aadharId)}
-                    </div>
-                  )}
-                </div>
-              </div>
+                            <div className="space-y-2">
+                              <Label htmlFor="aadharId" className="text-slate-700">Aadhar ID</Label>
+                              <div className="relative">
+                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                                <Input
+                                  id="aadharId"
+                                  type="text"
+                                  placeholder="123456789012"
+                                  value={formData.aadharId}
+                                  onChange={(e) => handleAadharChange(e.target.value)}
+                                  className="pl-10 border-slate-300 focus:border-[#0F766E] focus:ring-[#0F766E] font-mono text-center text-lg tracking-widest"
+                                  maxLength={12}
+                                  required
+                                />
+                                {formData.aadharId ? (
+                                  <div className="mt-1 text-center text-xs text-slate-400 font-mono">
+                                    {formatAadhar(formData.aadharId)}
+                                  </div>
+                                ) : (
+                                  <div className="mt-1 text-center text-xs text-slate-300 font-mono">
+                                    XXXX XXXX XXXX
+                                  </div>
+                                )}
+                              </div>
+                            </div>
 
               {/* Error Message */}
               {error && (
@@ -282,12 +278,16 @@ export default function Index() {
             </form>
 
             {/* Demo Credentials */}
-            <div className="mt-6 p-3 bg-slate-50 rounded-lg border border-slate-200">
-              <p className="text-xs text-slate-600 text-center">
-                <strong>Demo Credentials:</strong><br />
-                Name: Michael Torres, Rank: Inspector, Division: Mumbai, Aadhar: 123456789012
-              </p>
-            </div>
+                        <div className="mt-6 p-3 bg-slate-50 rounded-lg border border-slate-200">
+                          <p className="text-xs text-slate-600 text-center">
+                            <strong>Demo Credentials:</strong><br />
+                            Name: Michael Torres, Rank: Inspector, Division: Mumbai, Aadhar: 123456789012
+                          </p>
+                          <p className="text-xs text-slate-600 text-center mt-2">
+                            <strong>Welfare Officer:</strong> Sarah Johnson, Superintendent, Chandigarh<br />
+                            <strong>Commander:</strong> James Wilson, Director General, Command
+                          </p>
+                        </div>
           </CardContent>
         </Card>
 
