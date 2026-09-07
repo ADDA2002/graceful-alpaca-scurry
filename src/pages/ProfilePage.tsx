@@ -8,7 +8,9 @@ import { PredictiveRiskEngine } from "@/utils/riskEngine";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { Heart, Shield, Clock, Activity, ArrowRight, Battery, Moon, Droplets, Thermometer } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import { Heart, Shield, Clock, Activity, ArrowRight, Battery, Moon, Droplets, Thermometer, User, Briefcase, Calendar, MapPin, Award, TrendingUp, FileText, Edit } from "lucide-react";
 
 export default function ProfilePage() {
   const { user, isAuthenticated } = useAuth();
@@ -27,43 +29,62 @@ export default function ProfilePage() {
   if (!personnel || !hrData) return null;
 
   return (
-    <div className="min-h-screen bg-[#F0F7FA]">
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-3xl mx-auto space-y-6">
-          {/* Profile Header */}
-          <Card className="border-slate-200 shadow-lg">
-            <CardHeader className="text-center">
-                          <div className="inline-flex p-4 rounded-full bg-gradient-to-br from-[#0F766E] to-teal-500 mx-auto mb-4">
-                            <span className="text-2xl font-bold text-white">
-                              {personnel.name.split(' ').map(n => n[0]).join('')}
-                            </span>
-                          </div>
-                          <CardTitle className="text-2xl text-slate-900">{personnel.name}</CardTitle>
-                          <CardDescription>
-                                          {personnel.rank} • {personnel.division} • {personnel.yearsOfService} years of service
-                                        </CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div className="flex items-center gap-2">
-                              <Shield className="h-5 w-5 text-[#0F766E]" />
-                              <div>
-                                <p className="text-xs text-slate-500">Status</p>
-                                <p className="text-sm font-medium text-slate-900 capitalize">{personnel.status.replace('-', ' ')}</p>
-                              </div>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <Activity className="h-5 w-5 text-[#0F766E]" />
-                              <div>
-                                <p className="text-xs text-slate-500">Last Check-in</p>
-                                <p className="text-sm font-medium text-slate-900">
-                                  {wellnessData.length > 0 ? wellnessData[0].date : 'No data'}
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        </CardContent>
-          </Card>
+      <div className="min-h-screen bg-[#F0F7FA]">
+        <div className="container mx-auto px-4 py-8">
+          <div className="max-w-3xl mx-auto space-y-6">
+            {/* Profile Header */}
+            <Card className="border-slate-200 shadow-lg overflow-hidden">
+              <div className="h-20 bg-gradient-to-r from-[#0F766E] to-teal-500" />
+              <CardHeader className="text-center -mt-4 pb-0">
+                <div className="inline-flex p-4 rounded-full bg-gradient-to-br from-[#0F766E] to-teal-500 mx-auto mb-4 ring-4 ring-[#F0F7FA]">
+                  <span className="text-2xl font-bold text-white">
+                    {personnel.name.split(' ').map(n => n[0]).join('')}
+                  </span>
+                </div>
+                <CardTitle className="text-2xl text-slate-900">{personnel.name}</CardTitle>
+                <CardDescription className="flex items-center justify-center gap-2 flex-wrap">
+                  <span>{personnel.rank}</span>
+                  <span>•</span>
+                  <span>{personnel.division}</span>
+                  <span>•</span>
+                  <span>{personnel.yearsOfService} years of service</span>
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="pt-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <div className="flex items-center gap-2">
+                    <Shield className="h-5 w-5 text-[#0F766E]" />
+                    <div>
+                      <p className="text-xs text-slate-500">Status</p>
+                      <p className="text-sm font-medium text-slate-900 capitalize">{personnel.status.replace('-', ' ')}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Activity className="h-5 w-5 text-[#0F766E]" />
+                    <div>
+                      <p className="text-xs text-slate-500">Last Check-in</p>
+                      <p className="text-sm font-medium text-slate-900">
+                        {wellnessData.length > 0 ? wellnessData[0].date : 'No data'}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <User className="h-5 w-5 text-[#0F766E]" />
+                    <div>
+                      <p className="text-xs text-slate-500">Personnel ID</p>
+                      <p className="text-sm font-medium text-slate-900">{personnel.id}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Briefcase className="h-5 w-5 text-[#0F766E]" />
+                    <div>
+                      <p className="text-xs text-slate-500">Role</p>
+                      <p className="text-sm font-medium text-slate-900 capitalize">{personnel.role.replace('-', ' ')}</p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
 
           {/* Risk Profile */}
           {assessment && (
