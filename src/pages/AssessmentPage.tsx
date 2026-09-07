@@ -9,6 +9,7 @@ import { mockBiometricData } from "@/data/mockBiometricData";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { Slider } from "@/components/ui/slider";
 import { Heart, CheckCircle, ArrowRight } from "lucide-react";
 
 interface SliderQuestion {
@@ -249,19 +250,21 @@ export default function AssessmentPage() {
                                             const currentValue = responses[fieldKey] as number;
                                             return (
                                             <div className="space-y-6">
-                                              <input
-                                                type="range"
-                                                min={q.min}
-                                                max={q.max}
-                                                value={currentValue}
-                                                onChange={(e) => handleSliderChange(fieldKey, parseInt(e.target.value))}
-                                                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-teal-500"
-                                              />
-                                              <div className="flex justify-between text-xs text-slate-500">
-                                                {q.labels.map((label, idx) => (
-                                                  <span key={idx}>{label}</span>
-                                                ))}
-                                              </div>
+                                              <Slider
+                                                                                              min={q.min}
+                                                                                              max={q.max}
+                                                                                              step={1}
+                                                                                              value={[currentValue]}
+                                                                                              onValueChange={(val) => handleSliderChange(fieldKey, val[0])}
+                                                                                              className="w-full"
+                                                                                            />
+                                                                                            <div className="relative h-4">
+                                                                                              {q.labels.map((label, idx) => (
+                                                                                                <span key={idx} className="absolute text-xs text-slate-500" style={{ left: `${idx * 25}%`, transform: 'translateX(-50%)' }}>
+                                                                                                  {label}
+                                                                                                </span>
+                                                                                              ))}
+                                                                                            </div>
                                               <div className="text-center">
                                                 <span className="text-3xl font-bold text-slate-900">{currentValue}</span>
                                                 <p className="text-sm text-slate-500 mt-1">{q.labels[currentValue - 1]}</p>
