@@ -277,17 +277,6 @@ export default function Index() {
               </Button>
             </form>
 
-            {/* Demo Credentials */}
-                        <div className="mt-6 p-3 bg-slate-50 rounded-lg border border-slate-200">
-                          <p className="text-xs text-slate-600 text-center">
-                            <strong>Demo Credentials:</strong><br />
-                            Name: Michael Torres, Rank: Inspector, Division: Mumbai, Aadhar: 123456789012
-                          </p>
-                          <p className="text-xs text-slate-600 text-center mt-2">
-                            <strong>Welfare Officer:</strong> Sarah Johnson, Superintendent, Chandigarh<br />
-                            <strong>Commander:</strong> James Wilson, Director General, Command
-                          </p>
-                        </div>
           </CardContent>
         </Card>
 
