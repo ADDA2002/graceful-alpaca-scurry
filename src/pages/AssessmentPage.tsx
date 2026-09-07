@@ -72,60 +72,69 @@ export default function AssessmentPage() {
     }
   };
 
-  const questions: Question[] = [
-    {
-      title: "Sleep Quality",
-      description: "How would you rate your sleep quality over the past week?",
-      type: "slider",
-      min: 1,
-      max: 5,
-      value: responses.sleepQuality,
-      labels: ["Very Poor", "Poor", "Fair", "Good", "Excellent"]
-    },
-    {
-      title: "Stress Level",
-      description: "How stressed have you felt over the past week?",
-      type: "slider",
-      min: 1,
-      max: 5,
-      value: responses.stressLevel,
-      labels: ["Very Low", "Low", "Moderate", "High", "Very High"]
-    },
-    {
-      title: "Mood",
-      description: "How would you describe your overall mood?",
-      type: "select",
-      options: ["excellent", "good", "fair", "poor", "very-poor"],
-      value: responses.mood
-    },
-    {
-      title: "Energy Level",
-      description: "How would you rate your energy level?",
-      type: "slider",
-      min: 1,
-      max: 5,
-      value: responses.energyLevel,
-      labels: ["Very Low", "Low", "Moderate", "High", "Excellent"]
-    },
-    {
-      title: "Work-Life Balance",
-      description: "How well are you balancing work and personal life?",
-      type: "slider",
-      min: 1,
-      max: 5,
-      value: responses.workLifeBalance,
-      labels: ["Very Poor", "Poor", "Fair", "Good", "Excellent"]
-    },
-    {
-      title: "Social Support",
-      description: "How supported do you feel by colleagues and family?",
-      type: "slider",
-      min: 1,
-      max: 5,
-      value: responses.socialSupport,
-      labels: ["Very Low", "Low", "Moderate", "High", "Excellent"]
-    }
-  ];
+  const fieldMap: Record<string, keyof typeof responses> = {
+      "sleepquality": "sleepQuality",
+      "stresslevel": "stressLevel",
+      "mood": "mood",
+      "energylevel": "energyLevel",
+      "work-lifebalance": "workLifeBalance",
+      "socialsupport": "socialSupport"
+    };
+  
+    const questions: Question[] = [
+      {
+        title: "Sleep Quality",
+        description: "How would you rate your sleep quality over the past week?",
+        type: "slider",
+        min: 1,
+        max: 5,
+        value: responses.sleepQuality,
+        labels: ["Very Poor", "Poor", "Fair", "Good", "Excellent"]
+      },
+      {
+        title: "Stress Level",
+        description: "How stressed have you felt over the past week?",
+        type: "slider",
+        min: 1,
+        max: 5,
+        value: responses.stressLevel,
+        labels: ["Very Low", "Low", "Moderate", "High", "Very High"]
+      },
+      {
+        title: "Mood",
+        description: "How would you describe your overall mood?",
+        type: "select",
+        options: ["excellent", "good", "fair", "poor", "very-poor"],
+        value: responses.mood
+      },
+      {
+        title: "Energy Level",
+        description: "How would you rate your energy level?",
+        type: "slider",
+        min: 1,
+        max: 5,
+        value: responses.energyLevel,
+        labels: ["Very Low", "Low", "Moderate", "High", "Excellent"]
+      },
+      {
+        title: "Work-Life Balance",
+        description: "How well are you balancing work and personal life?",
+        type: "slider",
+        min: 1,
+        max: 5,
+        value: responses.workLifeBalance,
+        labels: ["Very Poor", "Poor", "Fair", "Good", "Excellent"]
+      },
+      {
+        title: "Social Support",
+        description: "How supported do you feel by colleagues and family?",
+        type: "slider",
+        min: 1,
+        max: 5,
+        value: responses.socialSupport,
+        labels: ["Very Low", "Low", "Moderate", "High", "Excellent"]
+      }
+    ];
 
   const handleSliderChange = (field: string, value: number) => {
     setResponses(prev => ({ ...prev, [field]: value }));
@@ -235,50 +244,53 @@ export default function AssessmentPage() {
             </CardHeader>
             <CardContent>
               {questions[currentStep].type === "slider" && (() => {
-                const q = questions[currentStep] as SliderQuestion;
-                return (
-                <div className="space-y-6">
-                  <input
-                    type="range"
-                    min={q.min}
-                    max={q.max}
-                    value={q.value}
-                    onChange={(e) => handleSliderChange(q.title.toLowerCase().replace(/\s/g, ''), parseInt(e.target.value))}
-                    className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-teal-500"
-                  />
-                  <div className="flex justify-between text-xs text-slate-500">
-                    {q.labels.map((label, idx) => (
-                      <span key={idx}>{label}</span>
-                    ))}
-                  </div>
-                  <div className="text-center">
-                    <span className="text-3xl font-bold text-slate-900">{q.value}</span>
-                    <p className="text-sm text-slate-500 mt-1">{q.labels[q.value - 1]}</p>
-                  </div>
-                </div>
-                );
-              })()}
+                                            const q = questions[currentStep] as SliderQuestion;
+                                            const fieldKey = fieldMap[q.title.toLowerCase().replace(/\s/g, '')] || q.title.toLowerCase().replace(/\s/g, '');
+                                            const currentValue = responses[fieldKey] as number;
+                                            return (
+                                            <div className="space-y-6">
+                                              <input
+                                                type="range"
+                                                min={q.min}
+                                                max={q.max}
+                                                value={currentValue}
+                                                onChange={(e) => handleSliderChange(fieldKey, parseInt(e.target.value))}
+                                                className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-teal-500"
+                                              />
+                                              <div className="flex justify-between text-xs text-slate-500">
+                                                {q.labels.map((label, idx) => (
+                                                  <span key={idx}>{label}</span>
+                                                ))}
+                                              </div>
+                                              <div className="text-center">
+                                                <span className="text-3xl font-bold text-slate-900">{currentValue}</span>
+                                                <p className="text-sm text-slate-500 mt-1">{q.labels[currentValue - 1]}</p>
+                                              </div>
+                                            </div>
+                                            );
+                                          })()}
 
               {questions[currentStep].type === "select" && (() => {
-                const q = questions[currentStep] as SelectQuestion;
-                return (
-                <div className="grid grid-cols-2 gap-3">
-                  {q.options.map((option) => (
-                    <button
-                      key={option}
-                      className={`p-4 rounded-xl border-2 text-sm font-medium capitalize ${
-                        responses[q.title.toLowerCase().replace(/\s/g, '') as keyof typeof responses] === option
-                          ? "border-teal-500 bg-teal-50 text-teal-700"
-                          : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
-                      }`}
-                      onClick={() => handleSelectChange(q.title.toLowerCase().replace(/\s/g, ''), option)}
-                    >
-                      {option.replace('-', ' ')}
-                    </button>
-                  ))}
-                </div>
-                );
-              })()}
+                              const q = questions[currentStep] as SelectQuestion;
+                              const fieldKey = fieldMap[q.title.toLowerCase().replace(/\s/g, '')] || q.title.toLowerCase().replace(/\s/g, '');
+                              return (
+                              <div className="grid grid-cols-2 gap-3">
+                                {q.options.map((option) => (
+                                  <button
+                                    key={option}
+                                    className={`p-4 rounded-xl border-2 text-sm font-medium capitalize ${
+                                      responses[fieldKey] === option
+                                        ? "border-teal-500 bg-teal-50 text-teal-700"
+                                        : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"
+                                    }`}
+                                    onClick={() => handleSelectChange(fieldKey, option)}
+                                  >
+                                    {option.replace('-', ' ')}
+                                  </button>
+                                ))}
+                              </div>
+                              );
+                            })()}
             </CardContent>
           </Card>
 
