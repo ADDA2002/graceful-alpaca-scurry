@@ -135,87 +135,87 @@ export default function AssessmentPage() {
   };
 
   if (submitted && riskResult) {
-    return (
-      <div className="min-h-screen bg-slate-50">
-        <div className="container mx-auto px-4 py-8">
-          <Card className="max-w-2xl mx-auto border-slate-200 shadow-lg">
-            <CardHeader className="text-center">
-              <div className="inline-flex p-4 rounded-full bg-teal-100 mx-auto mb-4">
-                <CheckCircle className="h-12 w-12 text-teal-600" />
-              </div>
-              <CardTitle className="text-2xl text-slate-900">Assessment Submitted</CardTitle>
-              <CardDescription>Your wellness check-in has been recorded</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="bg-slate-50 rounded-xl p-6">
-                <h3 className="font-semibold text-slate-900 mb-4">Your Risk Profile</h3>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-slate-600">Overall Risk Score</span>
-                  <span className="text-3xl font-bold text-slate-900">{riskResult.overallScore}/100</span>
+      return (
+        <div className="min-h-screen bg-[#F0F7FA]">
+          <div className="container mx-auto px-4 py-8">
+            <Card className="max-w-2xl mx-auto border-slate-200 shadow-lg">
+              <CardHeader className="text-center">
+                <div className="inline-flex p-4 rounded-full bg-[#0F766E]/10 mx-auto mb-4">
+                  <CheckCircle className="h-12 w-12 text-[#0F766E]" />
                 </div>
-                <Progress value={riskResult.overallScore} className="h-3" />
-                
-                <div className="mt-6">
-                  <span className={`inline-block px-4 py-2 rounded-full text-sm font-medium ${
-                    riskResult.riskLevel === 'critical' ? 'bg-red-100 text-red-700' :
-                    riskResult.riskLevel === 'high' ? 'bg-orange-100 text-orange-700' :
-                    riskResult.riskLevel === 'moderate' ? 'bg-yellow-100 text-yellow-700' :
-                    'bg-green-100 text-green-700'
-                  }`}>
-                    {riskResult.riskLevel.toUpperCase()} RISK
-                  </span>
-                </div>
-              </div>
-
-              <div className="space-y-3">
-                <h4 className="font-medium text-slate-900">Contributing Factors</h4>
-                {riskResult.factors.map((factor, idx) => (
-                  <div key={idx} className="flex items-start gap-3 p-3 bg-slate-50 rounded-lg">
-                    <div className={`mt-1 h-2 w-2 rounded-full ${
-                      factor.severity === 'high' ? 'bg-red-500' :
-                      factor.severity === 'medium' ? 'bg-yellow-500' : 'bg-green-500'
-                    }`} />
-                    <div>
-                      <p className="text-sm font-medium text-slate-900">{factor.factor}</p>
-                      <p className="text-xs text-slate-500">{factor.description}</p>
-                    </div>
+                <CardTitle className="text-2xl text-slate-900">Assessment Submitted</CardTitle>
+                <CardDescription>Your wellness check-in has been recorded</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="bg-white rounded-xl p-6">
+                  <h3 className="font-semibold text-slate-900 mb-4">Your Risk Profile</h3>
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-slate-600">Overall Risk Score</span>
+                    <span className="text-3xl font-bold text-slate-900">{riskResult.overallScore}/100</span>
                   </div>
-                ))}
-              </div>
-
-              <div className="bg-teal-50 rounded-xl p-4 border border-teal-200">
-                <h4 className="font-medium text-teal-900 mb-2">Recommendation</h4>
-                <p className="text-sm text-teal-800">{riskResult.recommendation}</p>
-              </div>
-
-              <Button 
-                className="w-full bg-gradient-to-r from-teal-500 to-teal-600"
-                onClick={() => navigate("/dashboard")}
-              >
-                Return to Dashboard
-                <ArrowRight className="h-4 w-4 ml-2" />
-              </Button>
-            </CardContent>
-          </Card>
+                  <Progress value={riskResult.overallScore} className="h-3" />
+                  
+                  <div className="mt-6">
+                    <span className={`inline-block px-4 py-2 rounded-full text-sm font-medium ${
+                      riskResult.riskLevel === 'critical' ? 'bg-red-100 text-red-700' :
+                      riskResult.riskLevel === 'high' ? 'bg-orange-100 text-orange-700' :
+                      riskResult.riskLevel === 'moderate' ? 'bg-yellow-100 text-yellow-700' :
+                      'bg-green-100 text-green-700'
+                    }`}>
+                      {riskResult.riskLevel.toUpperCase()} RISK
+                    </span>
+                  </div>
+                </div>
+  
+                <div className="space-y-3">
+                  <h4 className="font-medium text-slate-900">Contributing Factors</h4>
+                  {riskResult.factors.map((factor, idx) => (
+                    <div key={idx} className="flex items-start gap-3 p-3 bg-white rounded-lg border border-slate-100">
+                      <div className={`mt-1 h-2 w-2 rounded-full ${
+                        factor.severity === 'high' ? 'bg-red-500' :
+                        factor.severity === 'medium' ? 'bg-yellow-500' : 'bg-green-500'
+                      }`} />
+                      <div>
+                        <p className="text-sm font-medium text-slate-900">{factor.factor}</p>
+                        <p className="text-xs text-slate-500">{factor.description}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+  
+                <div className="bg-[#0F766E]/10 rounded-xl p-4 border border-[#0F766E]/20">
+                  <h4 className="font-medium text-[#0F766E] mb-2">Recommendation</h4>
+                  <p className="text-sm text-[#0F766E]">{riskResult.recommendation}</p>
+                </div>
+  
+                <Button
+                  className="w-full bg-gradient-to-r from-[#0F766E] to-teal-500"
+                  onClick={() => navigate("/dashboard")}
+                >
+                  Return to Dashboard
+                  <ArrowRight className="h-4 w-4 ml-2" />
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         </div>
-      </div>
-    );
-  }
+      );
+    }
 
   return (
-    <div className="min-h-screen bg-[#F0F7FA]">
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-2xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <div className="inline-flex p-3 rounded-full bg-teal-100 mb-4">
-              <Heart className="h-8 w-8 text-teal-600" />
+      <div className="min-h-screen bg-[#F0F7FA]">
+        <div className="container mx-auto px-4 py-8">
+          <div className="max-w-2xl mx-auto">
+            {/* Header */}
+            <div className="text-center mb-8">
+              <div className="inline-flex p-3 rounded-full bg-[#0F766E]/10 mb-4">
+                <Heart className="h-8 w-8 text-[#0F766E]" />
+              </div>
+              <h1 className="text-2xl font-bold text-slate-900">Wellness Check-In</h1>
+              <p className="text-slate-600 mt-2">
+                {personnel?.name} • {personnel?.division}
+              </p>
             </div>
-            <h1 className="text-2xl font-bold text-slate-900">Wellness Check-In</h1>
-            <p className="text-slate-600 mt-2">
-                          {personnel?.name} • {personnel?.division}
-                        </p>
-          </div>
 
           {/* Progress */}
           <div className="mb-8">
@@ -292,22 +292,22 @@ export default function AssessmentPage() {
             </Button>
             
             {currentStep < questions.length - 1 ? (
-              <Button
-                onClick={() => setCurrentStep(prev => Math.min(questions.length - 1, prev + 1))}
-                className="bg-gradient-to-r from-teal-500 to-teal-600"
-              >
-                Next
-                <ArrowRight className="h-4 w-4 ml-2" />
-              </Button>
-            ) : (
-              <Button
-                onClick={handleSubmit}
-                className="bg-gradient-to-r from-teal-500 to-teal-600"
-              >
-                Submit Assessment
-                <CheckCircle className="h-4 w-4 ml-2" />
-              </Button>
-            )}
+                          <Button
+                            onClick={() => setCurrentStep(prev => Math.min(questions.length - 1, prev + 1))}
+                            className="bg-gradient-to-r from-[#0F766E] to-teal-500"
+                          >
+                            Next
+                            <ArrowRight className="h-4 w-4 ml-2" />
+                          </Button>
+                        ) : (
+                          <Button
+                            onClick={handleSubmit}
+                            className="bg-gradient-to-r from-[#0F766E] to-teal-500"
+                          >
+                            Submit Assessment
+                            <CheckCircle className="h-4 w-4 ml-2" />
+                          </Button>
+                        )}
           </div>
         </div>
       </div>

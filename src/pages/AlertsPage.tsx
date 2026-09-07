@@ -45,18 +45,18 @@ export default function AlertsPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto space-y-6">
           {/* Header */}
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="inline-flex p-3 rounded-full bg-orange-100 mb-4">
-                <Bell className="h-8 w-8 text-orange-600" />
-              </div>
-              <h1 className="text-2xl font-bold text-slate-900">Active Alerts</h1>
-              <p className="text-slate-600 mt-1">Personnel requiring attention</p>
-            </div>
-            <span className="px-4 py-2 bg-orange-100 text-orange-700 rounded-full text-sm font-medium">
-              {alerts.length} Active
-            </span>
-          </div>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="inline-flex p-3 rounded-full bg-[#0F766E]/10 mb-4">
+                          <Bell className="h-8 w-8 text-[#0F766E]" />
+                        </div>
+                        <h1 className="text-2xl font-bold text-slate-900">Active Alerts</h1>
+                        <p className="text-slate-600 mt-1">Personnel requiring attention</p>
+                      </div>
+                      <span className="px-4 py-2 bg-[#0F766E]/10 text-[#0F766E] rounded-full text-sm font-medium">
+                        {alerts.length} Active
+                      </span>
+                    </div>
 
           {alerts.length === 0 ? (
             <Card className="border-slate-200 shadow-lg">

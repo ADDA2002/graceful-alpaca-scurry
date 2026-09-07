@@ -33,8 +33,8 @@ export default function InterventionsPage() {
         <div className="max-w-3xl mx-auto space-y-6">
           {/* Header */}
           <div className="text-center">
-            <div className="inline-flex p-3 rounded-full bg-teal-100 mb-4">
-              <Heart className="h-8 w-8 text-teal-600" />
+            <div className="inline-flex p-3 rounded-full bg-[#0F766E]/10 mb-4">
+              <Heart className="h-8 w-8 text-[#0F766E]" />
             </div>
             <h1 className="text-2xl font-bold text-slate-900">Welfare Interventions</h1>
             <p className="text-slate-600 mt-2">Personalized recommendations based on your risk profile</p>
@@ -44,9 +44,9 @@ export default function InterventionsPage() {
           <Card className="border-slate-200 shadow-lg">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <Shield className="h-6 w-6 text-teal-500" />
-                <CardTitle>Risk Assessment Summary</CardTitle>
-              </div>
+                              <Shield className="h-6 w-6 text-[#0F766E]" />
+                              <CardTitle>Risk Assessment Summary</CardTitle>
+                            </div>
             </CardHeader>
             <CardContent>
               <div className="flex items-center justify-between mb-4">
@@ -70,14 +70,14 @@ export default function InterventionsPage() {
           {/* Interventions */}
           <Card className="border-slate-200 shadow-lg">
             <CardHeader>
-              <div className="flex items-center gap-3">
-                <Heart className="h-6 w-6 text-teal-500" />
-                <CardTitle>Recommended Interventions</CardTitle>
-              </div>
-              <CardDescription>
-                {recommendations.interventions.length} interventions recommended
-              </CardDescription>
-            </CardHeader>
+                          <div className="flex items-center gap-3">
+                            <Heart className="h-6 w-6 text-[#0F766E]" />
+                            <CardTitle>Recommended Interventions</CardTitle>
+                          </div>
+                          <CardDescription>
+                            {recommendations.interventions.length} interventions recommended
+                          </CardDescription>
+                        </CardHeader>
             <CardContent className="space-y-4">
               {recommendations.interventions.map((intervention, idx) => (
                 <div key={idx} className="p-4 bg-slate-50 rounded-xl border border-slate-100">
@@ -110,21 +110,21 @@ export default function InterventionsPage() {
           {/* Support Resources */}
           <Card className="border-slate-200 shadow-lg">
             <CardHeader>
-              <div className="flex items-center gap-3">
-                <Heart className="h-6 w-6 text-teal-500" />
-                <CardTitle>Support Resources</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {recommendations.supportResources.map((resource, idx) => (
-                  <div key={idx} className="p-3 bg-teal-50 rounded-lg border border-teal-200">
-                    <p className="text-sm font-medium text-teal-900">{resource}</p>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+                          <div className="flex items-center gap-3">
+                            <Heart className="h-6 w-6 text-[#0F766E]" />
+                            <CardTitle>Support Resources</CardTitle>
+                          </div>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            {recommendations.supportResources.map((resource, idx) => (
+                              <div key={idx} className="p-3 bg-[#0F766E]/10 rounded-lg border border-[#0F766E]/20">
+                                <p className="text-sm font-medium text-[#0F766E]">{resource}</p>
+                              </div>
+                            ))}
+                          </div>
+                        </CardContent>
+                      </Card>
 
           {/* Follow-up */}
           {recommendations.followUpRequired && (

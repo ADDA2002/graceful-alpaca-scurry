@@ -32,36 +32,36 @@ export default function ProfilePage() {
           {/* Profile Header */}
           <Card className="border-slate-200 shadow-lg">
             <CardHeader className="text-center">
-              <div className="inline-flex p-4 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 mx-auto mb-4">
-                <span className="text-2xl font-bold text-white">
-                  {personnel.name.split(' ').map(n => n[0]).join('')}
-                </span>
-              </div>
-              <CardTitle className="text-2xl text-slate-900">{personnel.name}</CardTitle>
-              <CardDescription>
-                              {personnel.rank} • {personnel.division} • {personnel.yearsOfService} years of service
-                            </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex items-center gap-2">
-                  <Shield className="h-5 w-5 text-teal-500" />
-                  <div>
-                    <p className="text-xs text-slate-500">Status</p>
-                    <p className="text-sm font-medium text-slate-900 capitalize">{personnel.status.replace('-', ' ')}</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Activity className="h-5 w-5 text-teal-500" />
-                  <div>
-                    <p className="text-xs text-slate-500">Last Check-in</p>
-                    <p className="text-sm font-medium text-slate-900">
-                      {wellnessData.length > 0 ? wellnessData[0].date : 'No data'}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
+                          <div className="inline-flex p-4 rounded-full bg-gradient-to-br from-[#0F766E] to-teal-500 mx-auto mb-4">
+                            <span className="text-2xl font-bold text-white">
+                              {personnel.name.split(' ').map(n => n[0]).join('')}
+                            </span>
+                          </div>
+                          <CardTitle className="text-2xl text-slate-900">{personnel.name}</CardTitle>
+                          <CardDescription>
+                                          {personnel.rank} • {personnel.division} • {personnel.yearsOfService} years of service
+                                        </CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="flex items-center gap-2">
+                              <Shield className="h-5 w-5 text-[#0F766E]" />
+                              <div>
+                                <p className="text-xs text-slate-500">Status</p>
+                                <p className="text-sm font-medium text-slate-900 capitalize">{personnel.status.replace('-', ' ')}</p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Activity className="h-5 w-5 text-[#0F766E]" />
+                              <div>
+                                <p className="text-xs text-slate-500">Last Check-in</p>
+                                <p className="text-sm font-medium text-slate-900">
+                                  {wellnessData.length > 0 ? wellnessData[0].date : 'No data'}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </CardContent>
           </Card>
 
           {/* Risk Profile */}
@@ -69,9 +69,9 @@ export default function ProfilePage() {
             <Card className="border-slate-200 shadow-lg">
               <CardHeader>
                 <div className="flex items-center gap-3">
-                  <Heart className="h-6 w-6 text-teal-500" />
-                  <CardTitle>Your Risk Profile</CardTitle>
-                </div>
+                                  <Heart className="h-6 w-6 text-[#0F766E]" />
+                                  <CardTitle>Your Risk Profile</CardTitle>
+                                </div>
                 <CardDescription>AI-generated assessment based on your data</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -109,10 +109,10 @@ export default function ProfilePage() {
                   ))}
                 </div>
 
-                <div className="bg-teal-50 rounded-xl p-4 border border-teal-200">
-                  <h4 className="font-medium text-teal-900 mb-2">Recommendation</h4>
-                  <p className="text-sm text-teal-800">{assessment.recommendation}</p>
-                </div>
+                <div className="bg-[#0F766E]/10 rounded-xl p-4 border border-[#0F766E]/20">
+                                  <h4 className="font-medium text-[#0F766E] mb-2">Recommendation</h4>
+                                  <p className="text-sm text-[#0F766E]">{assessment.recommendation}</p>
+                                </div>
               </CardContent>
             </Card>
           )}
@@ -120,11 +120,11 @@ export default function ProfilePage() {
           {/* Recent Wellness Check-ins */}
           <Card className="border-slate-200 shadow-lg">
             <CardHeader>
-              <div className="flex items-center gap-3">
-                <Clock className="h-6 w-6 text-teal-500" />
-                <CardTitle>Recent Wellness Check-ins</CardTitle>
-              </div>
-            </CardHeader>
+                          <div className="flex items-center gap-3">
+                            <Clock className="h-6 w-6 text-[#0F766E]" />
+                            <CardTitle>Recent Wellness Check-ins</CardTitle>
+                          </div>
+                        </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {wellnessData.slice(0, 5).map((wellness, idx) => (
