@@ -10,7 +10,7 @@ import PersonnelList from "@/components/Dashboard/PersonnelList";
 import TrendCharts from "@/components/Dashboard/TrendCharts";
 import AlertPanel from "@/components/Alerts/AlertPanel";
 import MobileNav from "@/components/Layout/MobileNav";
-import TopNav from "@/components/Layout/TopNav";
+import StickyHeader from "@/components/Layout/StickyHeader";
 import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
 
@@ -20,6 +20,7 @@ export default function DashboardPage() {
   const [assessments, setAssessments] = useState<RiskAssessment[]>([]);
   const [selectedPersonnel, setSelectedPersonnel] = useState<string | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated) {
