@@ -8,7 +8,7 @@ import { mockWellnessData } from "@/data/mockWellnessData";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Heart, CheckCircle, ArrowRight } from "lucide-react";
+import { Heart, CheckCircle, ArrowRight, Shield } from "lucide-react";
 
 interface SliderQuestion {
   title: string;
@@ -204,6 +204,20 @@ export default function AssessmentPage() {
 
   return (
       <div className="min-h-screen bg-[#F0F7FA]">
+        <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-sm border-b border-slate-200">
+          <div className="container mx-auto px-4 py-3 max-w-7xl">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Shield className="h-6 w-6 text-[#0F766E]" />
+                <span className="text-xl font-bold text-slate-900">RakhshaSetu</span>
+              </div>
+              <div className="hidden sm:flex items-center gap-6">
+                <span className="text-sm text-slate-600">Wellness Check-In</span>
+              </div>
+            </div>
+          </div>
+        </header>
+        
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-2xl mx-auto">
             {/* Header */}
