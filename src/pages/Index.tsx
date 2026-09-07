@@ -232,31 +232,33 @@ export default function Index() {
               </div>
 
               {/* Aadhar ID Field - Formatted */}
-                            <div className="space-y-2">
-                              <Label htmlFor="aadharId" className="text-slate-700">Aadhar ID</Label>
-                              <div className="relative">
-                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
-                                <Input
-                                  id="aadharId"
-                                  type="text"
-                                  placeholder="123456789012"
-                                  value={formData.aadharId}
-                                  onChange={(e) => handleAadharChange(e.target.value)}
-                                  className="pl-10 border-slate-300 focus:border-[#0F766E] focus:ring-[#0F766E] font-mono text-center text-lg tracking-widest"
-                                  maxLength={12}
-                                  required
-                                />
-                                {formData.aadharId ? (
-                                  <div className="mt-1 text-center text-xs text-slate-400 font-mono">
-                                    {formatAadhar(formData.aadharId)}
-                                  </div>
-                                ) : (
-                                  <div className="mt-1 text-center text-xs text-slate-300 font-mono">
-                                    XXXX XXXX XXXX
-                                  </div>
-                                )}
-                              </div>
-                            </div>
+                                          <div className="space-y-2">
+                                            <Label htmlFor="aadharId" className="text-slate-700">Aadhar ID</Label>
+                                            <div className="relative">
+                                              <div className="relative">
+                                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 z-10" />
+                                                <Input
+                                                  id="aadharId"
+                                                  type="text"
+                                                  placeholder="XXXX XXXX XXXX"
+                                                  value={formData.aadharId}
+                                                  onChange={(e) => handleAadharChange(e.target.value)}
+                                                  className="pl-10 border-slate-300 focus:border-[#0F766E] focus:ring-[#0F766E] font-mono text-center text-lg tracking-widest"
+                                                  maxLength={12}
+                                                  required
+                                                />
+                                              </div>
+                                              {formData.aadharId ? (
+                                                <div className="mt-1 text-center text-xs text-slate-400 font-mono">
+                                                  {formatAadhar(formData.aadharId)}
+                                                </div>
+                                              ) : (
+                                                <div className="mt-1 text-center text-xs text-slate-300 font-mono">
+                                                  XXXX XXXX XXXX
+                                                </div>
+                                              )}
+                                            </div>
+                                          </div>
 
               {/* Error Message */}
               {error && (
